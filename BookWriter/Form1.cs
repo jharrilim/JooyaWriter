@@ -16,6 +16,7 @@ namespace BookWriter
         public Form1()
         {
             InitializeComponent();
+            
         }
 
 
@@ -77,28 +78,38 @@ namespace BookWriter
         #region Edit
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainTxt.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainTxt.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainTxt.Paste();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainTxt.Undo();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            mainTxt.Redo();
         }
         #endregion
+
+        private void searchBox_Enter(object sender, EventArgs e)
+        {
+            if (searchBox.Text == "Search...") searchBox.Text = "";
+        }
+
+        private void searchBox_Leave(object sender, EventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(searchBox.Text)) searchBox.Text = "Search...";
+        }
     }
 }
