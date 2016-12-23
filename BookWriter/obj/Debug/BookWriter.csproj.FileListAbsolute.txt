@@ -7,3 +7,4 @@ c:\users\josep\documents\visual studio 2015\Projects\BookWriter\BookWriter\obj\D
 c:\users\josep\documents\visual studio 2015\Projects\BookWriter\BookWriter\obj\Debug\BookWriter.csproj.GenerateResource.Cache
 c:\users\josep\documents\visual studio 2015\Projects\BookWriter\BookWriter\obj\Debug\BookWriter.exe
 c:\users\josep\documents\visual studio 2015\Projects\BookWriter\BookWriter\obj\Debug\BookWriter.pdb
+C:\Users\josep\Documents\Visual Studio 2015\Projects\BookWriter\BookWriter\bin\Debug\Mond.dll
