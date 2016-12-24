@@ -17,7 +17,8 @@ namespace BookWriter
         private InstalledFontCollection installedFontCollection = new InstalledFontCollection();
         private FontFamily fontFamily = new FontFamily("Consolas");
         private List<string> fonts = FontFamily.Families.Select(f => f.Name).ToList();
-            
+        private string[] fontSizes = {"8", "9", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"};
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +28,9 @@ namespace BookWriter
         {
             fontComboBox.Items.AddRange(fonts.ToArray());
             fontComboBox.SelectedIndex = fontComboBox.FindStringExact("Arial");
+            fontSizeComboBox.Items.AddRange(fontSizes);
+            fontSizeComboBox.SelectedIndex = fontSizeComboBox.FindStringExact("12");
+            this.ActiveControl = mainTxt;
         }
 
         #region File
@@ -112,6 +116,18 @@ namespace BookWriter
         }
         #endregion
 
+        #region Font
+        private void fontToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FontDialog fontDialog = new FontDialog();
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                mainTxt.SelectionFont = fontDialog.Font;
+                fontComboBox.SelectedItem = fontDialog.Font.Name;
+                fontSizeComboBox.SelectedItem = fontDialog.Font.Size.ToString();
+            }
+        }
+        #endregion
         private void searchBox_Enter(object sender, EventArgs e)
         {
             if (searchBox.Text == "Search...") searchBox.Text = "";
@@ -119,12 +135,62 @@ namespace BookWriter
 
         private void searchBox_Leave(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(searchBox.Text)) searchBox.Text = "Search...";
+            if (String.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                searchBox.Text = "Search...";
+            }
+        }
+
+        private void searchBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == (char)Keys.Return)
+                {
+                    string query = searchBox.Text;
+                    int queryLength = searchBox.Text.Length;
+                    for (int i = 0; i < mainTxt.TextLength; i++)
+                    {
+                        if (mainTxt.Text.Substring(i, queryLength) == query)
+                        {
+                            //Change BackColour to yellow where substring is same as search results
+                            mainTxt.SelectionStart = i;
+                            mainTxt.SelectionLength = queryLength;
+                            mainTxt.SelectionBackColor = Color.Yellow;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { }
         }
 
         private void fontComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+                mainTxt.SelectionFont = new Font(fontComboBox.SelectedItem.ToString(), Convert.ToSingle(fontSizeComboBox.SelectedItem.ToString()));
+            }
+            catch (FormatException ex)
+            {
+                mainTxt.AppendText(fontComboBox.SelectedItem.ToString());
+            }
+            catch (NullReferenceException ex)
+            {
 
+            }
         }
+        
+        private void fontSizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                mainTxt.SelectionFont = new Font(fontComboBox.SelectedItem.ToString(), Convert.ToSingle(fontSizeComboBox.SelectedItem.ToString()));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
     }
 }
