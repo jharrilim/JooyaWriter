@@ -32,7 +32,7 @@ namespace BookWriter
             fontSizeComboBox.SelectedIndex = fontSizeComboBox.FindStringExact("12");
             this.ActiveControl = mainTxt;
         }
-
+        //TODO: New File and close tab functionality
         #region File
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -128,6 +128,8 @@ namespace BookWriter
             }
         }
         #endregion
+
+        #region Search
         private void searchBox_Enter(object sender, EventArgs e)
         {
             if (searchBox.Text == "Search...") searchBox.Text = "";
@@ -138,6 +140,16 @@ namespace BookWriter
             if (String.IsNullOrWhiteSpace(searchBox.Text))
             {
                 searchBox.Text = "Search...";
+                for (int i = 0; i < mainTxt.TextLength; i++)
+                {
+                    mainTxt.SelectionStart = i;
+                    mainTxt.SelectionLength = 1;
+                    if (mainTxt.SelectionBackColor == Color.Yellow)
+                    {
+                        mainTxt.Select(i, 1);
+                        mainTxt.SelectionBackColor = Color.Transparent;
+                    }
+                }
             }
         }
 
@@ -147,11 +159,11 @@ namespace BookWriter
             {
                 if (e.KeyChar == (char)Keys.Return)
                 {
-                    string query = searchBox.Text;
+                    string query = searchBox.Text.ToLower();
                     int queryLength = searchBox.Text.Length;
                     for (int i = 0; i < mainTxt.TextLength; i++)
                     {
-                        if (mainTxt.Text.Substring(i, queryLength) == query)
+                        if (mainTxt.Text.Substring(i, queryLength).ToLower() == query)
                         {
                             //Change BackColour to yellow where substring is same as search results
                             mainTxt.SelectionStart = i;
@@ -163,6 +175,7 @@ namespace BookWriter
             }
             catch (Exception ex) { }
         }
+        #endregion
 
         private void fontComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -230,6 +230,8 @@
             // 
             // mainTxt
             // 
+            this.mainTxt.AcceptsTab = true;
+            this.mainTxt.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.mainTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTxt.Location = new System.Drawing.Point(3, 3);
             this.mainTxt.Name = "mainTxt";
