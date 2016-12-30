@@ -44,20 +44,29 @@ namespace BookWriter
             OpenFileDialog openDialog = new OpenFileDialog();
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
-                mainTxt.LoadFile(openDialog.FileName, RichTextBoxStreamType.PlainText);
+                if (Path.GetExtension(openDialog.FileName) == ".txt")
+                {
+                    mainTxt.LoadFile(openDialog.FileName, RichTextBoxStreamType.PlainText);
+                    tabControl1.Name = openDialog.FileName;
+                }
+                else if (Path.GetExtension(openDialog.FileName) == ".rtf")
+                {
+                    mainTxt.LoadFile(openDialog.FileName, RichTextBoxStreamType.RichText);
+                    tabControl1.Name = openDialog.FileName;
+                }
+                    
             }
-            tabControl1.Name = openDialog.FileName;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Plain Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveDialog.Filter = "Rich Text File (*.rtf)|*.rtf|Plain Text File (*.txt)|*.txt|All files (*.*)|*.*";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 mainTxt.SaveFile(saveDialog.FileName, RichTextBoxStreamType.RichText);
+                tabControl1.Name = saveDialog.FileName;
             }
-            tabControl1.Name = saveDialog.FileName;
         }
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
